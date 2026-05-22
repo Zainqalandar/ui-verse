@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { signup, signin } from '@/lib/api/auth'
 
 interface SignupModalProps {
   mode: 'signup' | 'signin'
@@ -18,6 +19,7 @@ export default function SignupModal({ mode, isOpen, onClose, onSwitchMode }: Sig
     password: '',
     countryCode: '+91',
   })
+  const [loading, setLoading] = useState(false)
 
   const isSignup = mode === 'signup'
   const title = isSignup ? 'Create an account' : 'Welcome back'
@@ -197,9 +199,26 @@ export default function SignupModal({ mode, isOpen, onClose, onSwitchMode }: Sig
 
               <button
                 type="submit"
-                className="w-full bg-[#1D6FD8] hover:bg-[#1559b8] active:bg-[#1045a0] text-white font-semibold text-sm py-3 rounded-full transition-colors duration-200 mt-1"
+                onClick={async (e) => {
+                  e.preventDefault()
+                  setLoading(true)
+                  try {
+                    if (isSignup) {
+                      await signup(formData)
+                      onClose()
+                    } else {
+                      await signin({ email: formData.email, password: formData.password })
+                      onClose()
+                    }
+                  } catch (err) {
+                    // error handled in helpers
+                  } finally {
+                    setLoading(false)
+                  }
+                }}
+                className="w-full bg-[#1D6FD8] hover:bg-[#1559b8] active:bg-[#1045a0] text-white font-semibold text-sm py-3 rounded-full transition-colors duration-200 mt-1 disabled:opacity-60"
               >
-                {submitLabel}
+                {loading ? 'Please wait...' : submitLabel}
               </button>
             </form>
 
