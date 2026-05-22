@@ -1,6 +1,7 @@
 'use client'
 
 import SignupModal from '@/components/SignupModal'
+import VerificationModal from '@/components/VerificationModal'
 import { useAuthModal } from '@/context/AuthModalContext'
 
 export default function AuthModalRenderer() {
@@ -20,6 +21,7 @@ export default function AuthModalRenderer() {
         onClose={closeModal}
         onSwitchMode={openSignup}
       />
+      <VerificationModal />
     </>
   )
 }

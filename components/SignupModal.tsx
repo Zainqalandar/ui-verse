@@ -1,7 +1,9 @@
-'use client'
+"use client"
 
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { signup, signin } from '@/lib/api/auth'
+import { useAuthModal } from '@/context/AuthModalContext'
 
 interface SignupModalProps {
   mode: 'signup' | 'signin'
@@ -10,17 +12,17 @@ interface SignupModalProps {
   onSwitchMode?: () => void
 }
 
+type FormValues = {
+  fullName: string
+  email: string
+  countryCode: string
+  phone: string
+  password: string
+}
+
 export default function SignupModal({ mode, isOpen, onClose, onSwitchMode }: SignupModalProps) {
   const [showPassword, setShowPassword] = useState(false)
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    password: '',
-    countryCode: '+91',
-  })
-  const [loading, setLoading] = useState(false)
-
+  const { openVerify } = useAuthModal()
   const isSignup = mode === 'signup'
   const title = isSignup ? 'Create an account' : 'Welcome back'
   const subtitle = isSignup ? "Let's get your account set up" : 'Sign in to continue'
@@ -28,11 +30,55 @@ export default function SignupModal({ mode, isOpen, onClose, onSwitchMode }: Sig
   const switchText = isSignup ? 'Already have an account?' : "Don't have an account?"
   const switchActionText = isSignup ? 'Log in' : 'Create one'
 
+  const {
+    register,
+    handleSubmit,
+    // monitor data
+    watch,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({
+    defaultValues: { fullName: '', email: '', phone: '', password: '', countryCode: '+92' },
+    mode: 'onTouched',
+  })
+
+  console.log('watch', watch()) // for debugging, can be removed later
+
   if (!isOpen) return null
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose()
+    }
+  }
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      if (isSignup) {
+        await signup({
+          fullName: data.fullName,
+          email: data.email,
+          phone: data.phone,
+          password: data.password,
+        })
+        // open verification modal with email
+        openVerify(data.email)
+        // keep modal open to show verification, or close signup as desired
+      } else {
+        await signin({ email: data.email, password: data.password })
+        onClose()
+      }
+    } catch (err: any) {
+      // try to map server validation errors to fields
+      const resp = err?.response?.data
+      if (resp?.errors && typeof resp.errors === 'object') {
+        for (const key of Object.keys(resp.errors)) {
+          setError(key as any, { type: 'server', message: resp.errors[key] as string })
+        }
+      } else if (resp?.message) {
+        // generic message — attach to email field for visibility
+        setError('email', { type: 'server', message: resp.message })
+      }
     }
   }
 
@@ -100,7 +146,7 @@ export default function SignupModal({ mode, isOpen, onClose, onSwitchMode }: Sig
               {subtitle}
             </h2>
 
-            <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
+            <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
               {isSignup && (
                 <div className="flex flex-col gap-1.5">
                   <label className="text-sm font-medium text-gray-700">
@@ -109,10 +155,10 @@ export default function SignupModal({ mode, isOpen, onClose, onSwitchMode }: Sig
                   <input
                     type="text"
                     placeholder="Enter your full name"
-                    value={formData.fullName}
-                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                    {...register('fullName', { required: 'Full name is required' })}
                     className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 outline-none focus:border-[#1D6FD8] focus:ring-2 focus:ring-[#1D6FD8]/10 transition-all"
                   />
+                  {errors.fullName && <p className="text-xs text-red-500">{errors.fullName.message}</p>}
                 </div>
               )}
 
@@ -123,10 +169,10 @@ export default function SignupModal({ mode, isOpen, onClose, onSwitchMode }: Sig
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  {...register('email', { required: 'Email is required', pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Enter a valid email' } })}
                   className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 outline-none focus:border-[#1D6FD8] focus:ring-2 focus:ring-[#1D6FD8]/10 transition-all"
                 />
+                {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
               </div>
 
               {isSignup && (
@@ -137,16 +183,10 @@ export default function SignupModal({ mode, isOpen, onClose, onSwitchMode }: Sig
                   <div className="flex gap-2">
                     <div className="relative">
                       <select
-                        value={formData.countryCode}
-                        onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
+                        {...register('countryCode')}
                         className="appearance-none border border-gray-200 rounded-lg px-3 py-2.5 pr-7 text-sm text-gray-700 outline-none focus:border-[#1D6FD8] bg-white cursor-pointer"
                       >
-                        <option value="+91">+91</option>
-                        <option value="+1">+1</option>
-                        <option value="+44">+44</option>
                         <option value="+92">+92</option>
-                        <option value="+971">+971</option>
-                        <option value="+966">+966</option>
                       </select>
                       <svg className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" width="10" height="6" viewBox="0 0 10 6" fill="none">
                         <path d="M1 1L5 5L9 1" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -155,11 +195,11 @@ export default function SignupModal({ mode, isOpen, onClose, onSwitchMode }: Sig
                     <input
                       type="tel"
                       placeholder="Enter your contact number"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      {...register('phone', { required: 'Phone is required', pattern: { value: /^[0-9]{6,15}$/, message: 'Enter a valid phone number' } })}
                       className="flex-1 border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 outline-none focus:border-[#1D6FD8] focus:ring-2 focus:ring-[#1D6FD8]/10 transition-all"
                     />
                   </div>
+                  {errors.phone && <p className="text-xs text-red-500">{errors.phone.message}</p>}
                 </div>
               )}
 
@@ -171,8 +211,7 @@ export default function SignupModal({ mode, isOpen, onClose, onSwitchMode }: Sig
                   <input
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Password"
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    {...register('password', { required: 'Password is required', minLength: { value: 6, message: 'Password must be at least 6 characters' } })}
                     className="w-full border border-gray-200 rounded-lg px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 outline-none focus:border-[#1D6FD8] focus:ring-2 focus:ring-[#1D6FD8]/10 transition-all"
                   />
                   <button
@@ -195,30 +234,15 @@ export default function SignupModal({ mode, isOpen, onClose, onSwitchMode }: Sig
                     )}
                   </button>
                 </div>
+                {errors.password && <p className="text-xs text-red-500">{errors.password.message}</p>}
               </div>
 
               <button
                 type="submit"
-                onClick={async (e) => {
-                  e.preventDefault()
-                  setLoading(true)
-                  try {
-                    if (isSignup) {
-                      await signup(formData)
-                      onClose()
-                    } else {
-                      await signin({ email: formData.email, password: formData.password })
-                      onClose()
-                    }
-                  } catch (err) {
-                    // error handled in helpers
-                  } finally {
-                    setLoading(false)
-                  }
-                }}
                 className="w-full bg-[#1D6FD8] hover:bg-[#1559b8] active:bg-[#1045a0] text-white font-semibold text-sm py-3 rounded-full transition-colors duration-200 mt-1 disabled:opacity-60"
+                disabled={isSubmitting}
               >
-                {loading ? 'Please wait...' : submitLabel}
+                {isSubmitting ? 'Please wait...' : submitLabel}
               </button>
             </form>
 
