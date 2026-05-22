@@ -21,7 +21,7 @@ export default function AuthModalRenderer() {
         onClose={closeModal}
         onSwitchMode={openSignup}
       />
-      <VerificationModal />
+      <VerificationModal key={activeModal} />
     </>
   )
 }

@@ -24,7 +24,7 @@ export async function signup(payload: SignupPayload) {
     const res = await api.post('/patient/register', body)
     toast.success('Signup successful — verification code sent')
     return res.data
-  } catch (err: any) {
+  } catch (err: unknown) {
     // let caller handle showing field-level errors
     throw err
   }
@@ -40,7 +40,7 @@ export async function signin(payload: SigninPayload) {
     }
     toast.success('Signed in successfully')
     return res.data
-  } catch (err: any) {
+  } catch (err: unknown) {
     throw err
   }
 }
@@ -50,7 +50,7 @@ export async function verifyEmail(payload: { email: string; code: string }) {
     const res = await api.post('/verifyEmail', payload)
     toast.success('Email verified successfully')
     return res.data
-  } catch (err: any) {
+  } catch (err: unknown) {
     throw err
   }
 }

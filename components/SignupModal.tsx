@@ -15,7 +15,6 @@ interface SignupModalProps {
 type FormValues = {
   fullName: string
   email: string
-  countryCode: string
   phone: string
   password: string
 }
@@ -33,16 +32,12 @@ export default function SignupModal({ mode, isOpen, onClose, onSwitchMode }: Sig
   const {
     register,
     handleSubmit,
-    // monitor data
-    watch,
     setError,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
-    defaultValues: { fullName: '', email: '', phone: '', password: '', countryCode: '+92' },
+    defaultValues: { fullName: '', email: '', phone: '', password: '' },
     mode: 'onTouched',
   })
-
-  console.log('watch', watch()) // for debugging, can be removed later
 
   if (!isOpen) return null
 
@@ -68,16 +63,15 @@ export default function SignupModal({ mode, isOpen, onClose, onSwitchMode }: Sig
         await signin({ email: data.email, password: data.password })
         onClose()
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       // try to map server validation errors to fields
-      const resp = err?.response?.data
-      if (resp?.errors && typeof resp.errors === 'object') {
-        for (const key of Object.keys(resp.errors)) {
-          setError(key as any, { type: 'server', message: resp.errors[key] as string })
+      const resp = err as { response?: { data?: { errors?: Record<string, string>; message?: string } } }
+      if (resp?.response?.data?.errors && typeof resp.response.data.errors === 'object') {
+        for (const key of Object.keys(resp.response.data.errors)) {
+          setError(key as keyof FormValues, { type: 'server', message: String(resp.response.data.errors[key]) })
         }
-      } else if (resp?.message) {
-        // generic message — attach to email field for visibility
-        setError('email', { type: 'server', message: resp.message })
+      } else if (resp?.response?.data?.message) {
+        setError('email', { type: 'server', message: resp.response.data.message })
       }
     }
   }
@@ -89,10 +83,10 @@ export default function SignupModal({ mode, isOpen, onClose, onSwitchMode }: Sig
       onClick={handleBackdropClick}
     >
       {/* Modal Container */}
-      <div className="relative w-full max-w-[860px] bg-white rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row min-h-[520px] max-h-[95vh]">
+      <div className="relative w-full max-w-215 bg-white rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row min-h-130 max-h-[95vh]">
 
         {/* LEFT SIDE — Hero Image */}
-        <div className="relative w-full md:w-[40%] min-h-[220px] md:min-h-full flex-shrink-0 overflow-hidden">
+        <div className="relative w-full md:w-[40%] min-h-55 md:min-h-full shrink-0 overflow-hidden">
           {/* Gradient overlay image with family */}
           <div
             className="absolute inset-0 bg-cover bg-center"
@@ -101,7 +95,7 @@ export default function SignupModal({ mode, isOpen, onClose, onSwitchMode }: Sig
             }}
           />
           {/* Dark overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
 
           {/* Bottom caption */}
           <div className="absolute bottom-6 left-0 right-0 flex flex-col items-center gap-3 px-6">
@@ -180,25 +174,12 @@ export default function SignupModal({ mode, isOpen, onClose, onSwitchMode }: Sig
                   <label className="text-sm font-medium text-gray-700">
                     Phone No <span className="text-red-500">*</span>
                   </label>
-                  <div className="flex gap-2">
-                    <div className="relative">
-                      <select
-                        {...register('countryCode')}
-                        className="appearance-none border border-gray-200 rounded-lg px-3 py-2.5 pr-7 text-sm text-gray-700 outline-none focus:border-[#1D6FD8] bg-white cursor-pointer"
-                      >
-                        <option value="+92">+92</option>
-                      </select>
-                      <svg className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" width="10" height="6" viewBox="0 0 10 6" fill="none">
-                        <path d="M1 1L5 5L9 1" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </div>
-                    <input
-                      type="tel"
-                      placeholder="Enter your contact number"
-                      {...register('phone', { required: 'Phone is required', pattern: { value: /^[0-9]{6,15}$/, message: 'Enter a valid phone number' } })}
-                      className="flex-1 border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 outline-none focus:border-[#1D6FD8] focus:ring-2 focus:ring-[#1D6FD8]/10 transition-all"
-                    />
-                  </div>
+                  <input
+                    type="tel"
+                    placeholder="Enter your contact number"
+                    {...register('phone', { required: 'Phone is required', pattern: { value: /^[0-9]{6,15}$/, message: 'Enter a valid phone number' } })}
+                    className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 outline-none focus:border-[#1D6FD8] focus:ring-2 focus:ring-[#1D6FD8]/10 transition-all"
+                  />
                   {errors.phone && <p className="text-xs text-red-500">{errors.phone.message}</p>}
                 </div>
               )}
