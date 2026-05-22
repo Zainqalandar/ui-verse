@@ -45,7 +45,7 @@ export async function signin(payload: SigninPayload) {
   }
 }
 
-export async function verifyEmail(payload: { email: string; code: string }) {
+export async function verifyEmail(payload: { email: string; otp: string }) {
   try {
     const res = await api.post('/user/verifyEmail', payload)
     toast.success('Email verified successfully')

@@ -19,6 +19,7 @@ export default function VerificationModal() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('verifyEmail')
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (saved) setStoredEmail(saved)
     }
   }, [])
@@ -99,7 +100,7 @@ export default function VerificationModal() {
     }
 
     try {
-      await verifyEmailApi({ email: currentEmail, code: codeValue })
+      await verifyEmailApi({ email: currentEmail, otp: codeValue })
       closeModal()
     } catch (error: unknown) {
       const resp = error as { response?: { data?: { message?: string } } }
