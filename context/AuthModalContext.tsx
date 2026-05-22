@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, ReactNode, useContext, useState } from 'react'
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 
 type AuthModalType = 'signup' | 'signin' | 'verify' | null
 
@@ -19,6 +19,14 @@ export function AuthModalProvider({ children }: { children: ReactNode }) {
   const [activeModal, setActiveModal] = useState<AuthModalType>(null)
   const [verifyEmailState, setVerifyEmailState] = useState<string | null>(null)
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const storedEmail = localStorage.getItem('verifyEmail')
+    if (storedEmail) {
+      setVerifyEmailState(storedEmail)
+    }
+  }, [])
+
   return (
     <AuthModalContext.Provider
       value={{
@@ -26,13 +34,19 @@ export function AuthModalProvider({ children }: { children: ReactNode }) {
         openSignup: () => setActiveModal('signup'),
         openSignin: () => setActiveModal('signin'),
         openVerify: (email?: string) => {
-          if (email) setVerifyEmailState(email)
+          if (email) {
+            setVerifyEmailState(email)
+            localStorage.setItem('verifyEmail', email)
+          }
           setActiveModal('verify')
         },
         verifyEmail: verifyEmailState,
         closeModal: () => {
           setActiveModal(null)
           setVerifyEmailState(null)
+          if (typeof window !== 'undefined') {
+            localStorage.removeItem('verifyEmail')
+          }
         },
       }}
     >

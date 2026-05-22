@@ -11,8 +11,19 @@ interface VerifyForm {
 
 export default function VerificationModal() {
   const { activeModal, closeModal, verifyEmail: email, openSignin } = useAuthModal()
+  const [storedEmail, setStoredEmail] = useState<string | null>(null)
   const [digits, setDigits] = useState<string[]>(Array(6).fill(''))
   const inputsRef = useRef<Array<HTMLInputElement | null>>([])
+
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('verifyEmail')
+      if (saved) setStoredEmail(saved)
+    }
+  }, [])
+
+  const currentEmail = email || storedEmail
 
   const {
     register,
@@ -74,7 +85,7 @@ export default function VerificationModal() {
   }
 
   const onSubmit = async () => {
-    if (!email) {
+    if (!currentEmail) {
       setError('code', { type: 'manual', message: 'Email is required for verification' })
       return
     }
@@ -88,7 +99,7 @@ export default function VerificationModal() {
     }
 
     try {
-      await verifyEmailApi({ email, code: codeValue })
+      await verifyEmailApi({ email: currentEmail, code: codeValue })
       closeModal()
     } catch (error: unknown) {
       const resp = error as { response?: { data?: { message?: string } } }
