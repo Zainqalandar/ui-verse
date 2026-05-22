@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: process.env.BASE_URL || 'https://expatcares.ae/api',
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || '/api/proxy',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -9,7 +9,6 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    if (!config.baseURL) config.baseURL = process.env.BASE_URL || 'https://expatcares.ae/api'
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('token')
       if (token && config.headers) config.headers['Authorization'] = `Bearer ${token}`
