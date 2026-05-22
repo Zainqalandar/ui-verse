@@ -1,13 +1,11 @@
 'use client'
 
 import { useState } from 'react'
+import { useAuthModal } from '@/context/AuthModalContext'
 
-interface NavbarProps {
-  onSignupClick?: () => void
-}
-
-export default function Navbar({ onSignupClick }: NavbarProps) {
+export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const { openSignup, openSignin } = useAuthModal()
 
   return (
     <>
@@ -45,7 +43,10 @@ export default function Navbar({ onSignupClick }: NavbarProps) {
         {/* Right side */}
         <div className="flex items-center gap-2">
           {/* Log In button */}
-          <button className="flex items-center gap-1.5 border border-gray-200 rounded-full px-3.5 py-1.5 text-xs font-medium text-gray-600 hover:border-[#1D6FD8] hover:text-[#1D6FD8] transition-colors">
+          <button
+            onClick={openSignin}
+            className="flex items-center gap-1.5 border border-gray-200 rounded-full px-3.5 py-1.5 text-xs font-medium text-gray-600 hover:border-[#1D6FD8] hover:text-[#1D6FD8] transition-colors"
+          >
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
               <circle cx="12" cy="7" r="4" />
@@ -55,7 +56,7 @@ export default function Navbar({ onSignupClick }: NavbarProps) {
 
           {/* Sign Up — desktop only */}
           <button
-            onClick={onSignupClick}
+            onClick={openSignup}
             className="hidden md:block bg-[#1D6FD8] hover:bg-[#1559b8] text-white text-sm font-semibold px-5 py-2 rounded-full transition-colors"
           >
             Sign Up
@@ -91,8 +92,14 @@ export default function Navbar({ onSignupClick }: NavbarProps) {
             </a>
           ))}
           <button
-            onClick={onSignupClick}
-            className="mt-3 mb-2 w-full bg-[#1D6FD8] text-white text-sm font-semibold py-2.5 rounded-full hover:bg-[#1559b8] transition-colors"
+            onClick={openSignin}
+            className="mt-3 mb-2 w-full border border-gray-200 text-[#1D6FD8] text-sm font-semibold py-2.5 rounded-full hover:bg-gray-50 transition-colors"
+          >
+            Log In
+          </button>
+          <button
+            onClick={openSignup}
+            className="w-full bg-[#1D6FD8] text-white text-sm font-semibold py-2.5 rounded-full hover:bg-[#1559b8] transition-colors"
           >
             Sign Up
           </button>

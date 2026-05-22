@@ -1,14 +1,15 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 
 interface SignupModalProps {
+  mode: 'signup' | 'signin'
   isOpen: boolean
   onClose: () => void
+  onSwitchMode?: () => void
 }
 
-export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
+export default function SignupModal({ mode, isOpen, onClose, onSwitchMode }: SignupModalProps) {
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
     fullName: '',
@@ -17,6 +18,13 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
     password: '',
     countryCode: '+91',
   })
+
+  const isSignup = mode === 'signup'
+  const title = isSignup ? 'Create an account' : 'Welcome back'
+  const subtitle = isSignup ? "Let's get your account set up" : 'Sign in to continue'
+  const submitLabel = isSignup ? 'Continue' : 'Sign In'
+  const switchText = isSignup ? 'Already have an account?' : "Don't have an account?"
+  const switchActionText = isSignup ? 'Log in' : 'Create one'
 
   if (!isOpen) return null
 
@@ -79,7 +87,7 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
                 <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
               </svg>
             </button>
-            <span className="text-[#1D6FD8] font-semibold text-sm">Create an account</span>
+            <span className="text-[#1D6FD8] font-semibold text-sm">{title}</span>
             {/* spacer */}
             <span className="w-8" />
           </div>
@@ -87,73 +95,72 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
           {/* Form body */}
           <div className="flex-1 px-6 md:px-8 py-6">
             <h2 className="text-[22px] md:text-[26px] font-bold text-gray-900 mb-6 leading-tight">
-              Let's Get Your Account Set Up
+              {subtitle}
             </h2>
 
             <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
-              {/* Full Name */}
-              <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-medium text-gray-700">
-                  Full name <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter your full name"
-                  value={formData.fullName}
-                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 outline-none focus:border-[#1D6FD8] focus:ring-2 focus:ring-[#1D6FD8]/10 transition-all"
-                />
-              </div>
+              {isSignup && (
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-medium text-gray-700">
+                    Full name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter your full name"
+                    value={formData.fullName}
+                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                    className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 outline-none focus:border-[#1D6FD8] focus:ring-2 focus:ring-[#1D6FD8]/10 transition-all"
+                  />
+                </div>
+              )}
 
-              {/* Email */}
               <div className="flex flex-col gap-1.5">
                 <label className="text-sm font-medium text-gray-700">
                   Email <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="email"
-                  placeholder="Enter your full name"
+                  placeholder="Enter your email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 outline-none focus:border-[#1D6FD8] focus:ring-2 focus:ring-[#1D6FD8]/10 transition-all"
                 />
               </div>
 
-              {/* Phone */}
-              <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-medium text-gray-700">
-                  Phone No <span className="text-red-500">*</span>
-                </label>
-                <div className="flex gap-2">
-                  {/* Country code dropdown */}
-                  <div className="relative">
-                    <select
-                      value={formData.countryCode}
-                      onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
-                      className="appearance-none border border-gray-200 rounded-lg px-3 py-2.5 pr-7 text-sm text-gray-700 outline-none focus:border-[#1D6FD8] bg-white cursor-pointer"
-                    >
-                      <option value="+91">+91</option>
-                      <option value="+1">+1</option>
-                      <option value="+44">+44</option>
-                      <option value="+92">+92</option>
-                      <option value="+971">+971</option>
-                      <option value="+966">+966</option>
-                    </select>
-                    <svg className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" width="10" height="6" viewBox="0 0 10 6" fill="none">
-                      <path d="M1 1L5 5L9 1" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
+              {isSignup && (
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-medium text-gray-700">
+                    Phone No <span className="text-red-500">*</span>
+                  </label>
+                  <div className="flex gap-2">
+                    <div className="relative">
+                      <select
+                        value={formData.countryCode}
+                        onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
+                        className="appearance-none border border-gray-200 rounded-lg px-3 py-2.5 pr-7 text-sm text-gray-700 outline-none focus:border-[#1D6FD8] bg-white cursor-pointer"
+                      >
+                        <option value="+91">+91</option>
+                        <option value="+1">+1</option>
+                        <option value="+44">+44</option>
+                        <option value="+92">+92</option>
+                        <option value="+971">+971</option>
+                        <option value="+966">+966</option>
+                      </select>
+                      <svg className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                        <path d="M1 1L5 5L9 1" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                    <input
+                      type="tel"
+                      placeholder="Enter your contact number"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="flex-1 border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 outline-none focus:border-[#1D6FD8] focus:ring-2 focus:ring-[#1D6FD8]/10 transition-all"
+                    />
                   </div>
-                  <input
-                    type="tel"
-                    placeholder="Enter your contact number"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="flex-1 border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 outline-none focus:border-[#1D6FD8] focus:ring-2 focus:ring-[#1D6FD8]/10 transition-all"
-                  />
                 </div>
-              </div>
+              )}
 
-              {/* Password */}
               <div className="flex flex-col gap-1.5">
                 <label className="text-sm font-medium text-gray-700">
                   Password <span className="text-red-500">*</span>
@@ -188,18 +195,19 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
                 </div>
               </div>
 
-              {/* Continue button */}
               <button
                 type="submit"
                 className="w-full bg-[#1D6FD8] hover:bg-[#1559b8] active:bg-[#1045a0] text-white font-semibold text-sm py-3 rounded-full transition-colors duration-200 mt-1"
               >
-                Continue
+                {submitLabel}
               </button>
             </form>
 
             {/* Sign in with */}
             <div className="mt-5">
-              <p className="text-center text-sm text-gray-500 mb-3">Sign in With</p>
+              <p className="text-center text-sm text-gray-500 mb-3">
+                {isSignup ? 'Sign in With' : 'Continue with'}
+              </p>
               <div className="flex items-center justify-center gap-5">
                 {/* Facebook */}
                 <button className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors">
@@ -226,7 +234,9 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
 
               {/* Terms */}
               <p className="text-center text-[11px] text-gray-400 mt-4 leading-relaxed px-4">
-                By creating an account using email, Google or Apple, I agree to the{' '}
+                {isSignup
+                  ? 'By creating an account using email, Google or Apple, I agree to the '
+                  : 'By signing in using email, Google or Apple, I agree to the '}
                 <a href="#" className="text-[#1D6FD8] hover:underline">Terms & Conditions</a>{' '}
                 and acknowledge the{' '}
                 <a href="#" className="text-[#1D6FD8] hover:underline">Privacy Policy</a>.
@@ -234,8 +244,14 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
 
               {/* Login link */}
               <p className="text-center text-sm text-gray-500 mt-3">
-                Already have an account?{' '}
-                <a href="#" className="text-[#1D6FD8] font-semibold hover:underline">Log in</a>
+                {switchText}{' '}
+                <button
+                  type="button"
+                  onClick={onSwitchMode}
+                  className="text-[#1D6FD8] font-semibold hover:underline"
+                >
+                  {switchActionText}
+                </button>
               </p>
             </div>
           </div>
