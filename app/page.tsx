@@ -11,10 +11,6 @@ export default function Home() {
             UI-Verse
           </a>
         </h1>
-        <p className="mt-4 text-2xl text-center sm:text-left">
-          A collection of beautiful, customizable UI components for
-          your next project.
-        </p>
       </main>
     </div>
   )
