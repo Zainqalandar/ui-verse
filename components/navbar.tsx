@@ -50,7 +50,7 @@ export default function Navbar() {
 					{/* Log In button */}
 					<button
 						onClick={openSignin}
-						className="flex items-center gap-1.5 border border-gray-200 rounded-full px-3.5 py-1.5 text-xs font-medium text-gray-600 hover:border-[#1D6FD8] hover:text-[#1D6FD8] transition-colors"
+						className="flex items-center cursor-pointer gap-1.5 border border-gray-200 rounded-full px-3.5 py-1.5 text-xs font-medium text-gray-600 hover:border-[#1D6FD8] hover:text-[#1D6FD8] transition-colors"
 					>
 						
                         <img src="/icons/person-icon.png" alt="Login Icon" className="w-3.5 h-3.5" />
@@ -60,7 +60,7 @@ export default function Navbar() {
 					{/* Sign Up — desktop only */}
 					<button
 						onClick={openSignup}
-						className="hidden md:block bg-[#1D6FD8] hover:bg-[#1559b8] text-white text-sm font-semibold px-5 py-2 rounded-full transition-colors"
+						className="hidden md:block cursor-pointer bg-[#1D6FD8] hover:bg-[#1559b8] text-white text-sm font-semibold px-5 py-2 rounded-full transition-colors"
 					>
 						Sign Up
 					</button>

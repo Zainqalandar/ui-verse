@@ -12,7 +12,7 @@ interface VerifyForm {
 export default function VerificationModal() {
   const { activeModal, closeModal, verifyEmail: email, openSignin } = useAuthModal()
   const [storedEmail, setStoredEmail] = useState<string | null>(null)
-  const [verificationSuccess, setVerificationSuccess] = useState(true)
+  const [verificationSuccess, setVerificationSuccess] = useState(false)
   const [digits, setDigits] = useState<string[]>(Array(6).fill(''))
   const inputsRef = useRef<Array<HTMLInputElement | null>>([])
 
@@ -156,7 +156,7 @@ export default function VerificationModal() {
           <div className="flex items-center justify-between px-6 pt-5 pb-2 border-b border-gray-100">
             <button
               onClick={handleClose}
-              className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50 transition-colors"
+              className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 cursor-pointer hover:bg-gray-50 transition-colors"
               aria-label="Close"
             >
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -192,7 +192,7 @@ export default function VerificationModal() {
                 <button
                   type="button"
                   onClick={handleContinue}
-                  className="w-full max-w-xs bg-[#1D6FD8] hover:bg-[#1559b8] active:bg-[#1045a0] text-white font-semibold text-sm py-3 rounded-full transition-colors duration-200"
+                  className="w-full max-w-xs bg-[#1D6FD8] hover:bg-[#1559b8] active:bg-[#1045a0] text-white font-semibold text-sm py-3 rounded-full cursor-pointer transition-colors duration-200"
                 >
                   Continue to dashboard
                 </button>
@@ -221,7 +221,7 @@ export default function VerificationModal() {
 
                 <div className="flex items-center justify-between text-sm text-gray-500">
                   <span>Expire in 1:00</span>
-                  <button type="button" className="text-[#1D6FD8] font-semibold">
+                  <button type="button" className="text-[#1D6FD8] font-semibold cursor-pointer">
                     Resend
                   </button>
                 </div>
@@ -229,7 +229,7 @@ export default function VerificationModal() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#1D6FD8] hover:bg-[#1559b8] active:bg-[#1045a0] text-white font-semibold text-sm py-3 rounded-full transition-colors duration-200 disabled:opacity-60"
+                  className="w-full bg-[#1D6FD8] hover:bg-[#1559b8] active:bg-[#1045a0] text-white font-semibold text-sm py-3 rounded-full cursor-pointer transition-colors duration-200 disabled:opacity-60"
                 >
                   {isSubmitting ? 'Please wait...' : 'Continue'}
                 </button>
@@ -237,7 +237,7 @@ export default function VerificationModal() {
                 <button
                   type="button"
                   onClick={handleBackToLogin}
-                  className="text-center text-sm text-[#1D6FD8] font-semibold hover:underline"
+                  className="text-center text-sm text-[#1D6FD8] font-semibold cursor-pointer hover:underline"
                 >
                   Back to login
                 </button>

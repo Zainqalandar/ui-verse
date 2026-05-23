@@ -90,7 +90,7 @@ export default function Footer() {
           {/* LEFT SIDE */}
           <div className="space-y-6">
             {/* Logo */}
-            <div className="flex items-center gap-3">
+<div className="flex items-center gap-3 cursor-pointer">
               <div className="w-11 h-11 rounded-full border-2 border-white flex items-center justify-center">
                 <span className="text-sm font-bold">EC</span>
               </div>
@@ -108,28 +108,28 @@ export default function Footer() {
             <div className="flex items-center gap-4">
               <a
                 href="#"
-                className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-[#0D5AB8] transition"
+                className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center cursor-pointer hover:bg-white hover:text-[#0D5AB8] transition"
               >
                 <CustomFacebookIcon size={16} />
               </a>
 
               <a
                 href="#"
-                className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-[#0D5AB8] transition"
+                className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center cursor-pointer hover:bg-white hover:text-[#0D5AB8] transition"
               >
                 <CustomYoutubeIcon size={16} />
               </a>
 
               <a
                 href="#"
-                className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-[#0D5AB8] transition"
+                className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center cursor-pointer hover:bg-white hover:text-[#0D5AB8] transition"
               >
                 <CustomInstagramIcon size={16} />
               </a>
 
               <a
                 href="#"
-                className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-[#0D5AB8] transition"
+                className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center cursor-pointer hover:bg-white hover:text-[#0D5AB8] transition"
               >
                 <CustomLinkedinIcon size={16} />
               </a>
@@ -162,37 +162,37 @@ export default function Footer() {
 
             <ul className="space-y-4 text-[15px] text-[#D6E6FF]">
               <li>
-                <a href="#" className="hover:text-white transition">
+                <a href="#" className="cursor-pointer hover:text-white transition">
                   Services
                 </a>
               </li>
 
               <li>
-                <a href="#" className="hover:text-white transition">
+                <a href="#" className="cursor-pointer hover:text-white transition">
                   Blog
                 </a>
               </li>
 
               <li>
-                <a href="#" className="hover:text-white transition">
+                <a href="#" className="cursor-pointer hover:text-white transition">
                   About us
                 </a>
               </li>
 
               <li>
-                <a href="#" className="hover:text-white transition">
+                <a href="#" className="cursor-pointer hover:text-white transition">
                   Speak to Doctor
                 </a>
               </li>
 
               <li>
-                <a href="#" className="hover:text-white transition">
+                <a href="#" className="cursor-pointer hover:text-white transition">
                   How it Works
                 </a>
               </li>
 
               <li>
-                <a href="#" className="hover:text-white transition">
+                <a href="#" className="cursor-pointer hover:text-white transition">
                   Check Medications
                 </a>
               </li>
@@ -207,25 +207,25 @@ export default function Footer() {
 
             <ul className="space-y-4 text-[15px] text-[#D6E6FF]">
               <li>
-                <a href="#" className="hover:text-white transition">
+                <a href="#" className="cursor-pointer hover:text-white transition">
                   FAQ&apos;s
                 </a>
               </li>
 
               <li>
-                <a href="#" className="hover:text-white transition">
+                <a href="#" className="cursor-pointer hover:text-white transition">
                   Contact us
                 </a>
               </li>
 
               <li>
-                <a href="#" className="hover:text-white transition">
+                <a href="#" className="cursor-pointer hover:text-white transition">
                   Privacy policy
                 </a>
               </li>
 
               <li>
-                <a href="#" className="hover:text-white transition">
+                <a href="#" className="cursor-pointer hover:text-white transition">
                   Terms and Conditions
                 </a>
               </li>
@@ -241,25 +241,25 @@ export default function Footer() {
 
               <ul className="space-y-4 text-[15px] text-[#D6E6FF]">
                 <li>
-                  <a href="#" className="hover:text-white transition">
+                  <a href="#" className="cursor-pointer hover:text-white transition">
                     Pre-Travel Check
                   </a>
                 </li>
 
                 <li>
-                  <a href="#" className="hover:text-white transition">
+                  <a href="#" className="cursor-pointer hover:text-white transition">
                     Video Consultation
                   </a>
                 </li>
 
                 <li>
-                  <a href="#" className="hover:text-white transition">
+                  <a href="#" className="cursor-pointer hover:text-white transition">
                     Find a Replacement
                   </a>
                 </li>
 
                 <li>
-                  <a href="#" className="hover:text-white transition">
+                  <a href="#" className="cursor-pointer hover:text-white transition">
                     Documentation Support
                   </a>
                 </li>
@@ -268,7 +268,7 @@ export default function Footer() {
 
             {/* Back To Top */}
             <div className="mt-10 lg:mt-0 flex lg:justify-end">
-              <button className="bg-white text-[#0D5AB8] px-6 py-3 rounded-full flex items-center gap-3 font-medium hover:scale-105 transition">
+              <button className="bg-white text-[#0D5AB8] px-6 py-3 rounded-full flex items-center gap-3 font-medium cursor-pointer hover:scale-105 transition">
                 Back To Top
                 <ArrowUp size={18} />
               </button>
