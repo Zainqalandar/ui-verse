@@ -7,29 +7,28 @@ const categories = [
   {
     title: "The Basic",
     image:
-      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=1200&auto=format&fit=crop",
+      "/images/the-basic-image.png",
   },
   {
     title: "My Account",
     image:
-      "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1200&auto=format&fit=crop",
+      "/images/my-account.png",
   },
   {
     title: "Medical Care",
     image:
-      "https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1200&auto=format&fit=crop",
+      "/images/medical-care.png",
   },
   {
     title: "Privacy security",
     image:
-      "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop",
+      "/images/privacy-security.png",
   },
 ];
 
 export default function BottomSection() {
   return (
    <>
-    <main className="w-full bg-white">
       <section className="w-full px-5 pb-12 pt-10 sm:px-8 md:px-14 lg:px-20 xl:px-24">
         {/* Heading */}
         <div className="flex flex-col items-center text-center">
@@ -81,7 +80,6 @@ export default function BottomSection() {
           ))}
         </div>
       </section>
-    </main>
    </>
   );
 }
