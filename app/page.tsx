@@ -1,6 +1,8 @@
 import BottomSection from "@/components/BottomSection";
+import DubaiHealthHero from "@/components/DubaiHealthHero";
 import FaqSection from "@/components/FaqSection";
 import HeroSection from "@/components/HeroSection";
+import HowItWorks from "@/components/HowItWorks";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import TrustedCareSection from "@/components/TrustedCareSection";
 
@@ -16,6 +18,8 @@ export default function Home() {
           </a>
         </h1> */}
         <TestimonialsSection />
+        <DubaiHealthHero />
+        <HowItWorks />
         <TrustedCareSection />
         <FaqSection />
         <BottomSection />
