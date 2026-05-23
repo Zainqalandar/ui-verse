@@ -1,15 +1,86 @@
 "use client";
 
 import {
-//   Facebook,
-//   Instagram,
-//   Linkedin,
   MapPin,
   Mail,
   Phone,
-//   Youtube,
   ArrowUp,
 } from "lucide-react";
+
+import { LucideProps } from 'lucide-react';
+
+const CustomFacebookIcon = (props: LucideProps) => (
+  <svg
+    xmlns="http://w3.org"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+);
+
+const CustomInstagramIcon = (props: LucideProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+    <path d="M16 11.37a4 4 0 1 1-2.83-2.83 4 4 0 0 1 2.83 2.83z" />
+    <line x1="17.5" y1="6.5" x2="17.5" y2="6.5" />
+  </svg>
+);
+
+const CustomLinkedinIcon = (props: LucideProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2h-4v9h-4v-18h4v3a6 6 0 0 1 5-3z" />
+    <rect x="2" y="9" width="4" height="12" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
+
+const CustomYoutubeIcon = (props: LucideProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.95C18.88 4 12 4 12 4s-6.88 0-8.59.47A2.78 2.78 0 0 0 1.95 6.42C1.48 8.13 1.48 12 1.48 12s0 3.87.47 5.58a2.78 2.78 0 0 0 1.95 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.47a2.78 2.78 0 0 0 1.95-1.95c.47-1.71.47-5.58.47-5.58s0-3.87-.47-5.58z" />
+    <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" />
+  </svg>
+);
 
 export default function Footer() {
   return (
@@ -39,28 +110,28 @@ export default function Footer() {
                 href="#"
                 className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-[#0D5AB8] transition"
               >
-                {/* <Facebook size={16} /> */}
+                <CustomFacebookIcon size={16} />
               </a>
 
               <a
                 href="#"
                 className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-[#0D5AB8] transition"
               >
-                {/* <Youtube size={16} /> */}
+                <CustomYoutubeIcon size={16} />
               </a>
 
               <a
                 href="#"
                 className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-[#0D5AB8] transition"
               >
-                {/* <Instagram size={16} /> */}
+                <CustomInstagramIcon size={16} />
               </a>
 
               <a
                 href="#"
                 className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-[#0D5AB8] transition"
               >
-                {/* <Linkedin size={16} /> */}
+                <CustomLinkedinIcon size={16} />
               </a>
             </div>
 
