@@ -12,7 +12,7 @@ interface VerifyForm {
 export default function VerificationModal() {
   const { activeModal, closeModal, verifyEmail: email, openSignin } = useAuthModal()
   const [storedEmail, setStoredEmail] = useState<string | null>(null)
-  const [verificationSuccess, setVerificationSuccess] = useState(true)
+  const [verificationSuccess, setVerificationSuccess] = useState(false)
   const [digits, setDigits] = useState<string[]>(Array(6).fill(''))
   const inputsRef = useRef<Array<HTMLInputElement | null>>([])
 
