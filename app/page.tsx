@@ -1,6 +1,8 @@
 import BottomSection from "@/components/BottomSection";
 import FaqSection from "@/components/FaqSection";
 import HeroSection from "@/components/HeroSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
+import TrustedCareSection from "@/components/TrustedCareSection";
 
 export default function Home() {
   return (
@@ -13,6 +15,8 @@ export default function Home() {
             UI-Verse
           </a>
         </h1> */}
+        <TestimonialsSection />
+        <TrustedCareSection />
         <FaqSection />
         <BottomSection />
       </main>
