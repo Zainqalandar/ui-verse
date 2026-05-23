@@ -91,7 +91,8 @@ export default function SignupModal({ mode, isOpen, onClose, onSwitchMode }: Sig
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: `url('/images/register-side-img.png')`,
+              // backgroundImage: `url('/images/register-side-img.png')`,
+              backgroundImage: `${isSignup ? "url('/images/register-side-img.png')" : "url('/images/login-img.png')"}`,
             }}
           />
           {/* Dark overlay */}

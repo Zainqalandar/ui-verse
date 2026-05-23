@@ -12,7 +12,7 @@ interface VerifyForm {
 export default function VerificationModal() {
   const { activeModal, closeModal, verifyEmail: email, openSignin } = useAuthModal()
   const [storedEmail, setStoredEmail] = useState<string | null>(null)
-  const [verificationSuccess, setVerificationSuccess] = useState(false)
+  const [verificationSuccess, setVerificationSuccess] = useState(true)
   const [digits, setDigits] = useState<string[]>(Array(6).fill(''))
   const inputsRef = useRef<Array<HTMLInputElement | null>>([])
 
@@ -134,7 +134,7 @@ export default function VerificationModal() {
         <div className="relative w-full md:w-[40%] min-h-55 md:min-h-full shrink-0 overflow-hidden">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url('/images/register-side-img.png')" }}
+            style={{ backgroundImage: `${verificationSuccess ? "url('/images/verifided-side-img.png')" : "url('/images/verify-side-img.png')"}` }}
           />
           <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
           <div className="absolute bottom-6 left-0 right-0 flex flex-col items-center gap-3 px-6">

@@ -35,7 +35,7 @@ export default function TrustedCareSection() {
               {/* Center Image */}
               <div className="relative w-[220px] h-[160px] md:w-[280px] md:h-[200px]">
                 <Image
-                  src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1200&auto=format&fit=crop"
+                  src="/icons/world-icon.png"
                   alt="International Standards"
                   fill
                   className="object-contain rounded-xl"
@@ -65,7 +65,7 @@ export default function TrustedCareSection() {
 
             <div className="relative w-[160px] h-[160px]">
               <Image
-                src="https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1000&auto=format&fit=crop"
+                src="/icons/doctor-icon.png"
                 alt="Licensed Pharmacists"
                 fill
                 className="object-contain rounded-xl"
@@ -91,7 +91,7 @@ export default function TrustedCareSection() {
 
             <div className="relative w-[160px] h-[160px]">
               <Image
-                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000&auto=format&fit=crop"
+                src="/icons/translation-icon.png"
                 alt="Multilingual Support"
                 fill
                 className="object-contain rounded-xl"
