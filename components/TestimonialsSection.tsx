@@ -10,7 +10,7 @@ const testimonials = [
 	{
 		name: 'Linda A.',
 		role: 'Patient',
-		image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop',
+		image: '/images/testimonio-img.png',
 		text: `“Smooth and Stress-Free.”
 I was worried when I couldn’t find my regular medication in Dubai. Expat Care reviewed my prescription, explained the equivalent UAE-approved option, and arranged everything quickly. The video call with the pharmacist gave me real confidence.
 

@@ -83,6 +83,12 @@ const CustomYoutubeIcon = (props: LucideProps) => (
 );
 
 export default function Footer() {
+  const handleBackToTop = () => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   return (
     <footer className="w-full bg-[#0D5AB8] rounded-[28px] text-white mt-10">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 py-12">
@@ -268,7 +274,11 @@ export default function Footer() {
 
             {/* Back To Top */}
             <div className="mt-10 lg:mt-0 flex lg:justify-end">
-              <button className="bg-white text-[#0D5AB8] px-6 py-3 rounded-full flex items-center gap-3 font-medium cursor-pointer hover:scale-105 transition">
+              <button
+                type="button"
+                onClick={handleBackToTop}
+                className="bg-white text-[#0D5AB8] px-6 py-3 rounded-full flex items-center gap-3 font-medium cursor-pointer hover:scale-105 transition"
+              >
                 Back To Top
                 <ArrowUp size={18} />
               </button>
