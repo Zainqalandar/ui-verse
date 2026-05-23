@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar";
 import { AuthModalProvider } from "@/context/AuthModalContext";
 import AuthModalRenderer from "@/components/AuthModalRenderer";
 import { Toaster } from 'sonner'
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
           <Navbar />
           <Toaster position="top-right" />
           {children}
+          <Footer />
           <AuthModalRenderer />
         </AuthModalProvider>
       </body>
